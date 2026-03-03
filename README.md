@@ -16,6 +16,9 @@ Sebuah proyek landing page interaktif yang menampilkan koleksi Hero Mobile Legen
 - **Vanilla JavaScript:** Logika slider, DOM Manipulation, Autoplay, dan Event Handling.
 
 ## 📸 Demo Tampilan
+[![Preview Website Slider Image](image/website-slider.png)](https://mochamadkhairan.github.io/Website-Slider/)
+
+🔗 **Live Preview:** [Lihat Langsung Di Sini](https://mochamadkhairan.github.io/Website-Slider/)
 
 
 ## 🚀 Cara Menjalankan Secara Lokal
