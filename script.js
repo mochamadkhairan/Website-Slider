@@ -4,7 +4,7 @@ let slider = document.querySelector('.slider');
 let sliderList = slider.querySelector('.list');
 let thumbnail = slider.querySelector('.thumbnail');
 
-// Fungsi Gerak Slider
+// --- LOGIKA SLIDER ---
 function moveSlider(type) {
     let sliderItems = sliderList.querySelectorAll('.item');
     let thumbnailItems = thumbnail.querySelectorAll('.item');
@@ -19,12 +19,14 @@ function moveSlider(type) {
         slider.classList.add('prev');
     }
 
-    // Reset Class Animasi
     clearTimeout(runTimeOut);
     runTimeOut = setTimeout(() => {
         slider.classList.remove('next');
         slider.classList.remove('prev');
-    }, 500); 
+    }, 500);
+
+    // Reset autoplay setiap kali tombol diklik manual
+    resetAutoplay();
 }
 
 nextBtn.onclick = () => moveSlider('next');
@@ -32,13 +34,24 @@ prevBtn.onclick = () => moveSlider('prev');
 
 let runTimeOut;
 
-// --- FITUR LEARN MORE ---
-// Buat elemen modal secara dinamis
+// --- FITUR AUTOPLAY ---
+let autoNext = setInterval(() => {
+    moveSlider('next');
+}, 7000); // Slider pindah setiap 7 detik
+
+function resetAutoplay() {
+    clearInterval(autoNext);
+    autoNext = setInterval(() => {
+        moveSlider('next');
+    }, 7000);
+}
+
+// --- FITUR NAV & MODAL ---
 const modalMarkup = `
     <div id="heroModal" class="modal">
         <div class="modal-content">
             <h2 id="modalTitle"></h2>
-            <p id="modalDesc"></p>
+            <div id="modalBody"></div>
             <span class="close-modal">Close</span>
         </div>
     </div>
@@ -46,21 +59,41 @@ const modalMarkup = `
 document.body.insertAdjacentHTML('beforeend', modalMarkup);
 
 const modal = document.getElementById('heroModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
 const closeModal = document.querySelector('.close-modal');
 
-// Handle klik 'Learn More'
+// Fungsi Membuka Modal
+function openModal(title, content) {
+    modalTitle.innerText = title;
+    modalBody.innerHTML = content;
+    modal.style.display = 'flex';
+}
+
+// Event untuk Navbar
+document.querySelectorAll('header nav a').forEach(link => {
+    link.onclick = (e) => {
+        e.preventDefault();
+        const target = e.target.getAttribute('href');
+        
+        if(target === '#home') {
+            window.location.reload(); // Refresh ke posisi awal
+        } else if(target === '#about') {
+            openModal("About Project", "<p>This Mobile Legends Image Slider project is built using HTML, CSS, and Vanilla JavaScript to display favorite heroes with an interactive UI.</p>");
+        } else if(target === '#contact') {
+            openModal("Contact Me", "<p>Contact me via:<br>Email: moch.khairanathallah@gmail.com<br>Instagram: @m.khairan22</p>");
+        }
+    };
+});
+
+// Event untuk 'Learn More'
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('more')) {
         e.preventDefault();
-        // Ambil info dari item yang sedang aktif (item pertama di .list)
         const currentItem = document.querySelector('.slider .list .item:nth-child(1)');
         const heroName = currentItem.querySelector('.name').innerText;
         const heroDesc = currentItem.querySelector('.desc p').innerText;
-
-        document.getElementById('modalTitle').innerText = heroName;
-        document.getElementById('modalDesc').innerText = "Detail Info: " + heroDesc;
-        
-        modal.style.display = 'flex';
+        openModal(heroName, `<p>${heroDesc}</p>`);
     }
 });
 

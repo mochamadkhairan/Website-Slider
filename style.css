@@ -28,14 +28,34 @@ header nav a {
     color: white;
     letter-spacing: 0.1rem;
     font-weight: 500;
-}
-
-header nav a:hover {
-    color: #000;
-    letter-spacing: 0.2rem;
+    position: relative;
     transition: 0.3s ease-in-out;
 }
 
+header nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #ef745c;
+    transition: 0.3s;
+}
+header nav a:hover::after {
+    width: 100%;
+}
+header nav a:hover {
+    letter-spacing: 0.2rem;
+    transition: 0.3s ease-in-out;
+}
+/* Memastikan konten modal rapi */
+#modalBody {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ccc;
+    margin-top: 15px;
+}
 .slider {
     width: 100vw;
     height:100vh;
@@ -338,3 +358,86 @@ header nav a:hover {
 
 .modal-content h2 { color: #ef745c; margin-bottom: 10px; }
 .close-modal { margin-top: 20px; cursor: pointer; display: inline-block; padding: 5px 15px; background: #fff; color: #000; border-radius: 5px; }
+
+/* --- RESPONSIVE SETTINGS --- */
+@media screen and (max-width: 1024px) {
+    header {
+        max-width: 90%;
+    }
+    .slider .list .item .detail .name {
+        font-size: 3rem;
+        line-height: 3rem;
+    }
+    .thumbnail {
+        bottom: 30px;
+        gap: 10px;
+    }
+    .thumbnail .item {
+        width: 120px;
+        height: 180px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    header nav {
+        gap: 1rem;
+    }
+    header nav a {
+        font-size: 0.8rem;
+    }
+    .slider .list .item .detail {
+        top: 15%;
+    }
+    .slider .list .item .detail .title {
+        letter-spacing: 0.3rem;
+    }
+    .slider .list .item .detail .name {
+        font-size: 2.2rem;
+        line-height: 2.2rem;
+        margin-bottom: 0.5rem;
+    }
+    .slider .list .item .detail .desc {
+        font-size: 0.9rem;
+        max-width: 100%;
+        padding-right: 10px;
+    }
+    .thumbnail {
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        gap: 8px;
+    }
+    .thumbnail .item {
+        width: 80px;
+        height: 120px;
+        border-radius: 10px;
+    }
+    .thumbnail .item img {
+        border-radius: 10px;
+    }
+    .thumbnail .item .detail .name, 
+    .thumbnail .item .detail blockquote {
+        display: none; /* Sembunyikan teks di thumbnail HP agar bersih */
+    }
+    .arrows {
+        top: 75%;
+        right: 50%;
+        transform: translateX(50%);
+        justify-content: center;
+        width: 100%;
+    }
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .slider .list .item .detail .name {
+        font-size: 1.8rem;
+    }
+    .slider .list .item .detail .more {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.8rem;
+    }
+}
